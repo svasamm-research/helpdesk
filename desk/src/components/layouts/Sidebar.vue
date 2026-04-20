@@ -146,6 +146,7 @@
     />
     <SettingsModal v-model="showSettingsModal" />
     <ShortcutsModal v-model="showShortcutsModal" />
+    <AboutModal v-model="showAboutModal" />
     <!-- Svasamm shadow of frappe-ui HelpModal: no `articles` or `docsLink`
          props (the upstream footer Help-centre link was removed). -->
     <HelpModal
@@ -173,6 +174,7 @@ import { Section, SidebarLink } from "@/components";
 import Apps from "@/components/Apps.vue";
 import CP from "@/components/command-palette/CP.vue";
 import { FrappeCloudIcon, InviteCustomer } from "@/components/icons";
+import AboutModal from "@/components/modals/AboutModal.vue";
 import ShortcutsModal from "@/components/modals/ShortcutsModal.vue";
 import SettingsModal from "@/components/Settings/SettingsModal.vue";
 import UserMenu from "@/components/UserMenu.vue";
@@ -247,6 +249,7 @@ const telephonyStore = useTelephonyStore();
 const { isCallingEnabled } = storeToRefs(telephonyStore);
 
 const showShortcutsModal = ref(false);
+const showAboutModal = ref(false);
 const showCommandPalette = ref(false);
 
 const { pinnedViews, publicViews } = useView();
@@ -367,6 +370,11 @@ const agentPortalDropdown = computed(() => [
     label: __("Settings"),
     icon: "settings",
     onClick: () => (showSettingsModal.value = true),
+  },
+  {
+    label: __("About Svasamm Helpdesk"),
+    icon: "info",
+    onClick: () => (showAboutModal.value = true),
   },
   {
     group: __("Danger"),
