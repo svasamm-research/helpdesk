@@ -1,28 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="No tickets yet">
   <defs>
-    <linearGradient id="hnt-g" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="nt-hd" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#ea580c"/>
       <stop offset="100%" stop-color="#c2410c"/>
     </linearGradient>
   </defs>
   <!-- Background tint -->
   <circle cx="200" cy="150" r="110" fill="#ffedd5" opacity="0.6"/>
-  <!-- Stylized ticket stub -->
-  <g fill="#ffffff" stroke="url(#hnt-g)" stroke-width="2.5" stroke-linejoin="round">
-    <path d="M120 100 L280 100 Q288 100 288 108 L288 135 Q278 140 278 150 Q278 160 288 165 L288 192 Q288 200 280 200 L120 200 Q112 200 112 192 L112 165 Q122 160 122 150 Q122 140 112 135 L112 108 Q112 100 120 100 Z"/>
+  <!-- Chat bubble shape (central, empty) -->
+  <g fill="#ffffff" stroke="url(#nt-hd)" stroke-width="3" stroke-linejoin="round">
+    <path d="M120 100 Q120 80 140 80 L260 80 Q280 80 280 100 L280 175 Q280 195 260 195 L195 195 L170 220 L170 195 L140 195 Q120 195 120 175 Z"/>
   </g>
-  <!-- Perforated divider -->
-  <line x1="200" y1="108" x2="200" y2="192" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.7"/>
-  <!-- Content lines on left -->
-  <g fill="#ea580c" opacity="0.45">
-    <rect x="130" y="125" width="55" height="6" rx="3"/>
-    <rect x="130" y="140" width="45" height="5" rx="2.5"/>
-    <rect x="130" y="155" width="50" height="5" rx="2.5"/>
-    <rect x="130" y="170" width="35" height="5" rx="2.5"/>
+  <!-- Three small dots inside bubble (indicating pending but empty messages) -->
+  <g fill="#ea580c" opacity="0.4">
+    <circle cx="170" cy="137" r="6"/>
+    <circle cx="200" cy="137" r="6"/>
+    <circle cx="230" cy="137" r="6"/>
   </g>
-  <!-- "Number" placeholder on right stub -->
-  <g fill="#ea580c" opacity="0.55">
-    <rect x="220" y="135" width="50" height="8" rx="3"/>
-    <rect x="220" y="155" width="40" height="6" rx="3"/>
+  <!-- Small check-mark accent top right -->
+  <g stroke="#ea580c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.6">
+    <circle cx="310" cy="95" r="16" stroke-width="2"/>
+    <path d="M302 95 L308 101 L318 90"/>
   </g>
 </svg>

@@ -1,25 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="No open issues">
   <defs>
-    <linearGradient id="hno-g" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="noi-hd" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#ea580c"/>
       <stop offset="100%" stop-color="#c2410c"/>
     </linearGradient>
   </defs>
-  <!-- Background tint -->
   <circle cx="200" cy="150" r="110" fill="#ffedd5" opacity="0.6"/>
-  <!-- Checkmark shield / "all clear" -->
-  <g fill="#ffffff" stroke="url(#hno-g)" stroke-width="2.5" stroke-linejoin="round">
-    <path d="M200 85 L255 105 L255 155 Q255 200 200 220 Q145 200 145 155 L145 105 Z"/>
+  <!-- Large celebratory checkmark in a rounded square -->
+  <g fill="#ffffff" stroke="url(#noi-hd)" stroke-width="3" stroke-linejoin="round">
+    <rect x="145" y="95" width="110" height="110" rx="20"/>
   </g>
-  <!-- Check inside -->
-  <path d="M172 150 L192 170 L230 128" stroke="url(#hno-g)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Small celebratory accents -->
-  <g fill="#ea580c" opacity="0.55">
-    <circle cx="110" cy="110" r="3"/>
-    <circle cx="295" cy="115" r="3"/>
-    <circle cx="120" cy="190" r="2.5"/>
-    <circle cx="285" cy="195" r="2.5"/>
-    <rect x="100" y="145" width="7" height="2" rx="1"/>
-    <rect x="296" y="155" width="7" height="2" rx="1"/>
+  <g fill="none" stroke="url(#noi-hd)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M170 150 L192 172 L234 128"/>
+  </g>
+  <!-- Decorative rays around the box -->
+  <g stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" opacity="0.5">
+    <line x1="95" y1="150" x2="115" y2="150"/>
+    <line x1="285" y1="150" x2="305" y2="150"/>
+    <line x1="200" y1="60" x2="200" y2="80"/>
+    <line x1="200" y1="220" x2="200" y2="240"/>
+    <line x1="120" y1="85" x2="133" y2="98"/>
+    <line x1="267" y1="202" x2="280" y2="215"/>
+    <line x1="280" y1="85" x2="267" y2="98"/>
+    <line x1="133" y1="202" x2="120" y2="215"/>
   </g>
 </svg>
