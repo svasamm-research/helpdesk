@@ -2,7 +2,27 @@ exclude: "node_modules|.git"
 default_stages: [pre-commit]
 fail_fast: false
 
+# Preserved from upstream frappe/helpdesk v1.22.1 so pre-commit rules match
+# what upstream authored (avoids large formatting-drift diffs that would make
+# upstream bumps painful). Svasamm additions below are scoped additions only:
+#   1. no-commit-to-branch blocks both develop + main (Svasamm branching policy)
+#   2. commitlint config (commitlint.config.cjs) drives CI-side Conventional
+#      Commits validation — NOT a local pre-commit hook because the Node
+#      binary tries to install its own libc++ and fails on macOS Sequoia
+#      (see CRM fork Phase 1 commits). CI (linters.yml::semantic-commits)
+#      enforces Conventional Commits on every PR regardless.
+#
+# If upstream bumps their pre-commit rules, we pick those up on the next
+# upstream merge into svasamm/base.
+
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: no-commit-to-branch
+        # Svasamm addition: block direct commits to both develop and main.
+        args: ["--branch", "develop", "--branch", "main"]
+
   - repo: https://github.com/psf/black
     rev: 22.6.0
     hooks:
