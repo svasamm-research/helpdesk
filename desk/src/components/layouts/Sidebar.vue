@@ -146,14 +146,14 @@
     />
     <SettingsModal v-model="showSettingsModal" />
     <ShortcutsModal v-model="showShortcutsModal" />
+    <!-- Svasamm shadow of frappe-ui HelpModal: no `articles` or `docsLink`
+         props (the upstream footer Help-centre link was removed). -->
     <HelpModal
       v-if="showHelpModal"
       v-model="showHelpModal"
-      v-model:articles="articles"
       appName="helpdesk"
       title="Svasamm Helpdesk"
       :logo="logo"
-      docsLink="https://github.com/svasamm-research/helpdesk#readme"
       :afterSkip="(step: string) => capture('onboarding_step_skipped_' + step)"
       :afterSkipAll="() => capture('onboarding_steps_skipped')"
       :afterReset="(step: string) => capture('onboarding_step_reset_' + step)"
@@ -194,13 +194,15 @@ import { isCustomerPortal } from "@/utils";
 import { call } from "frappe-ui";
 import {
   GettingStartedBanner,
-  HelpModal,
   IntermediateStepModal,
   minimize,
   showHelpModal,
   TrialBanner,
   useOnboarding,
 } from "frappe-ui/frappe";
+// Svasamm shadow: drops the upstream "Help centre" footer link. See
+// desk/src/svasamm/HelpModal.vue for the delta.
+import HelpModal from "@/svasamm/HelpModal.vue";
 
 import { HelpIcon } from "frappe-ui/icons";
 import { storeToRefs } from "pinia";
