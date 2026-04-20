@@ -1,8 +1,23 @@
 import frappe
 
 
-@frappe.whitelist(allow_guest=True)
-def get_config():
+# Svasamm fork: brand constants for the get_config() override below.
+# These drive configStore.brandName / brandLogo / favicon in the SPA
+# (desk/src/stores/config.ts fetches from this endpoint on every load).
+# Changing these values here is the SINGLE source of truth for runtime
+# brand chrome; build-time chrome lives in desk/index.html +
+# desk/vite.config.js (VitePWA manifest).
+_SVASAMM_BRAND_NAME = "Svasamm Helpdesk"
+_SVASAMM_BRAND_LOGO = "/assets/helpdesk/desk/svasamm/logo.svg"
+_SVASAMM_FAVICON = "/assets/helpdesk/desk/svasamm/favicon.svg"
+
+
+def _upstream_get_config():
+    """Upstream frappe/helpdesk v1.22.1 get_config body, preserved verbatim.
+
+    Kept as a private helper so upstream bumps land as a clean diff to this
+    function only; the Svasamm override in get_config() stays out of the way.
+    """
     fields = [
         "brand_name",
         "brand_logo",
@@ -23,4 +38,30 @@ def get_config():
         or frappe.db.get_single_value("Website Settings", "favicon")
         or "/assets/helpdesk/desk/favicon.svg"
     )
+    return res
+
+
+@frappe.whitelist(allow_guest=True)
+def get_config():
+    """Return SPA config, with Svasamm brand override applied.
+
+    The admin-editable HD Settings fields (brand_name, brand_logo, favicon)
+    default to Svasamm values if the admin hasn't set them. If the admin
+    HAS set them explicitly via Desk, their values win — per-tenant
+    customization still works. This matches the upstream fallback pattern
+    for favicon and extends it to brand_name + brand_logo.
+    """
+    res = _upstream_get_config()
+
+    # Svasamm brand fallback — applied AFTER upstream logic so any admin
+    # override via HD Settings / Website Settings wins over our default.
+    res.brand_name = res.brand_name or _SVASAMM_BRAND_NAME
+    res.brand_logo = res.brand_logo or _SVASAMM_BRAND_LOGO
+
+    # Favicon already has an upstream fallback chain (HD Settings -> Website
+    # Settings -> hard-coded helpdesk favicon). Replace the hard-coded
+    # last-resort fallback with the Svasamm favicon.
+    if res.favicon == "/assets/helpdesk/desk/favicon.svg":
+        res.favicon = _SVASAMM_FAVICON
+
     return res
