@@ -1,0 +1,104 @@
+# Linters — mirrors svasamm_crm_fork/.github/workflows/linters.yml, adapted
+# for the Helpdesk fork. Upstream's original `lint.yml` used older action
+# versions (actions/checkout@v2/v3, Node 18, Python 3.10) — this file
+# brings the fork in line with the Svasamm family standard (Node 24,
+# Python 3.14, checkout@v6).
+#
+# Helpdesk's `.pre-commit-config.yaml` does NOT include an eslint hook
+# (only black, flake8, prettier, isort), so no `SKIP: eslint` needed
+# here — unlike the CRM fork where eslint v8.44 still references legacy
+# .eslintrc and the repo has migrated to flat config.
+#
+# Security note: the only ${{ }} interpolations into run: blocks are
+# github.event.pull_request.{base,head}.sha — these are 40-char hex
+# strings validated by GitHub, not user-controlled input. No PR title,
+# branch name, or commit message flows into any shell command.
+
+name: Linters
+
+on:
+    pull_request:
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    pull-requests: read
+
+jobs:
+    commit-lint:
+        name: Semantic Commits
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  fetch-depth: 200
+
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: "24"
+                  check-latest: true
+
+            - name: Install commitlint
+              run: npm install --no-save @commitlint/cli @commitlint/config-conventional
+
+            - name: Check commit titles
+              env:
+                  BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                  HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+              run: npx commitlint --verbose --from "$BASE_SHA" --to "$HEAD_SHA"
+
+    semgrep:
+        name: Semgrep Rules
+        runs-on: ubuntu-latest
+
+        env:
+            PIP_DISABLE_PIP_VERSION_CHECK: "1"
+            PYTHONDONTWRITEBYTECODE: "1"
+
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Set up Python
+              uses: actions/setup-python@v6
+              with:
+                  python-version: "3.14"
+                  cache: pip
+
+            - name: Install Semgrep
+              run: pip install --upgrade semgrep
+
+            - name: Download Semgrep rules
+              run: git clone --depth 1 https://github.com/frappe/semgrep-rules.git frappe-semgrep-rules
+
+            - name: Run Semgrep rules
+              run: semgrep ci --config ./frappe-semgrep-rules/rules --config r/python.lang.correctness
+
+    pre-commit:
+        name: Pre-commit Checks
+        runs-on: ubuntu-latest
+
+        env:
+            PIP_DISABLE_PIP_VERSION_CHECK: "1"
+            PYTHONDONTWRITEBYTECODE: "1"
+
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Set up Python
+              uses: actions/setup-python@v6
+              with:
+                  python-version: "3.14"
+                  cache: pip
+
+            - uses: actions/setup-node@v6
+              with:
+                  node-version: "24"
+
+            - name: Install frontend dependencies
+              run: cd desk && yarn install
+
+            - name: Run Pre-commit
+              uses: pre-commit/action@v3.0.1
+              with:
+                  extra_args: --all-files
