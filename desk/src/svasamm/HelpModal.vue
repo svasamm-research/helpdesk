@@ -57,18 +57,18 @@
 <script setup>
 // Barrel imports only — subpath imports into frappe-ui break Vite module
 // resolution (the package's exports field restricts deep paths).
-import { FeatherIcon, Button } from 'frappe-ui'
-import { OnboardingSteps, useOnboarding, minimize } from 'frappe-ui/frappe'
-import { computed } from 'vue'
+import { FeatherIcon, Button } from "frappe-ui";
+import { OnboardingSteps, useOnboarding, minimize } from "frappe-ui/frappe";
+import { computed } from "vue";
 
 const props = defineProps({
   appName: {
     type: String,
-    default: 'helpdesk',
+    default: "helpdesk",
   },
   title: {
     type: String,
-    default: 'Svasamm Helpdesk',
+    default: "Svasamm Helpdesk",
   },
   logo: {
     type: Object,
@@ -90,13 +90,13 @@ const props = defineProps({
     type: Function,
     default: () => {},
   },
-})
+});
 
-const { isOnboardingStepsCompleted } = useOnboarding(props.appName)
+const { isOnboardingStepsCompleted } = useOnboarding(props.appName);
 
-const show = defineModel()
+const show = defineModel();
 
 const headingTitle = computed(() => {
-  return 'Getting started'
-})
+  return "Getting started";
+});
 </script>

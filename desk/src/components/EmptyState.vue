@@ -15,9 +15,7 @@
       />
       <!-- title -->
       <span>{{ title }}</span>
-      <span
-        class="text-center text-p-base text-ink-gray-6 font-normal"
-      >
+      <span class="text-center text-p-base text-ink-gray-6 font-normal">
         {{ computedDescription }}
       </span>
       <!-- Button which emits Empty State Action -->
@@ -91,7 +89,7 @@ const resolvedName = computed(() => {
 });
 
 const illustration = computed(
-  () => illustrationByName[resolvedName.value] || noTickets,
+  () => illustrationByName[resolvedName.value] || noTickets
 );
 
 const computedDescription = computed(() => {

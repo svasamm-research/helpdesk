@@ -45,9 +45,9 @@
             rel="noopener"
             class="underline text-ink-gray-7 hover:text-ink-gray-9"
           >
-            {{ __('Source available') }}
+            {{ __("Source available") }}
           </a>
-          — {{ __('AGPL §13 compliance (Svasamm fork)') }}
+          — {{ __("AGPL §13 compliance (Svasamm fork)") }}
         </p>
       </div>
     </template>
@@ -56,36 +56,36 @@
 <script setup lang="ts">
 // TODO: replace Documentation URL with https://docs.svasamm.com/helpdesk once
 // that exists.
-import { Dialog } from 'frappe-ui'
-import { __ } from '@/translation'
-import logoUrl from '@/svasamm/logo.svg'
-import LucideGlobe from '~icons/lucide/globe'
-import LucideGitHub from '~icons/lucide/github'
-import LucideBookOpen from '~icons/lucide/book-open'
-import LucideHeadset from '~icons/lucide/headset'
+import { Dialog } from "frappe-ui";
+import { __ } from "@/translation";
+import logoUrl from "@/svasamm/logo.svg";
+import LucideGlobe from "~icons/lucide/globe";
+import LucideGitHub from "~icons/lucide/github";
+import LucideBookOpen from "~icons/lucide/book-open";
+import LucideHeadset from "~icons/lucide/headset";
 
-const show = defineModel({ type: Boolean })
+const show = defineModel({ type: Boolean });
 
 const links = [
   {
-    label: __('Website'),
-    url: 'https://svasamm.com',
+    label: __("Website"),
+    url: "https://svasamm.com",
     icon: LucideGlobe,
   },
   {
-    label: __('GitHub Repository'),
-    url: 'https://github.com/svasamm-research/helpdesk',
+    label: __("GitHub Repository"),
+    url: "https://github.com/svasamm-research/helpdesk",
     icon: LucideGitHub,
   },
   {
-    label: __('Documentation'),
-    url: 'https://github.com/svasamm-research/helpdesk#readme',
+    label: __("Documentation"),
+    url: "https://github.com/svasamm-research/helpdesk#readme",
     icon: LucideBookOpen,
   },
   {
-    label: __('Contact Support'),
-    url: 'mailto:support@svasamm.com',
+    label: __("Contact Support"),
+    url: "mailto:support@svasamm.com",
     icon: LucideHeadset,
   },
-]
+];
 </script>

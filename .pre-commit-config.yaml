@@ -1,6 +1,23 @@
 exclude: "node_modules|.git"
-default_stages: [pre-commit]
+# Svasamm: hooks run at BOTH pre-commit and pre-push. Running them again
+# at push guarantees that a `git commit --no-verify` (local bypass) or a
+# stale index can't land bad code on the remote. Matches the CRM fork
+# + svasamm-research/dms pattern.
+default_stages: [pre-commit, pre-push]
+# Register hook types so `pre-commit install` sets up:
+#   .git/hooks/pre-commit   ← linting before every commit
+#   .git/hooks/commit-msg   ← (CI-only commitlint — see note at bottom)
+#   .git/hooks/pre-push     ← re-runs pre-commit hooks before push
+default_install_hook_types: [pre-commit, commit-msg, pre-push]
 fail_fast: false
+
+# Svasamm: use the user's system Node for every language:node hook rather
+# than letting pre-commit download its own. On macOS Sequoia some
+# pre-commit-bundled Node binaries hit a libc++ ABI mismatch
+# (dyld: "Symbol not found: __libcpp_verbose_abort"). setup-node on CI
+# and nvm-managed Node locally are both reliably compatible.
+default_language_version:
+  node: system
 
 # Preserved from upstream frappe/helpdesk v1.22.1 so pre-commit rules match
 # what upstream authored (avoids large formatting-drift diffs that would make
@@ -20,17 +37,32 @@ repos:
     rev: v5.0.0
     hooks:
       - id: no-commit-to-branch
-        # Svasamm addition: block direct commits to both develop and main.
-        args: ["--branch", "develop", "--branch", "main"]
+        # Svasamm: block our integration branch (svasamm/develop) and main.
+        # `develop` is retained during the rename transition in case anyone
+        # has an old local `develop` branch; once upstream's develop is no
+        # longer present in any local clone, this entry should be dropped.
+        args:
+          - "--branch"
+          - "svasamm/develop"
+          - "--branch"
+          - "main"
+          - "--branch"
+          - "develop"
 
+  # Svasamm: bumped from upstream helpdesk v1.22.1's pinned 22.6.0 to
+  # support Python 3.14 (pinned 22.6.0 raises "no current event loop"
+  # under 3.12+). Style is backward-compatible.
   - repo: https://github.com/psf/black
-    rev: 22.6.0
+    rev: 24.10.0
     hooks:
       - id: black
         types_or: [python, pyi]
 
+  # Svasamm: bumped from upstream helpdesk v1.22.1's pinned 5.0.4 to
+  # support Python 3.14 (pinned 5.0.4's pyflakes hits AttributeError
+  # on `ast.Str` which was removed in Python 3.12).
   - repo: https://github.com/PyCQA/flake8
-    rev: 5.0.4
+    rev: 7.1.1
     hooks:
       - id: flake8
         additional_dependencies:
@@ -48,8 +80,10 @@ repos:
         types: [file]
         types_or: [javascript, vue, html]
 
+  # Svasamm: bumped from 5.12.0 to 5.13.2 (last isort 5.x release) for
+  # compatibility with the newer black version above.
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
         args: [--profile, black]
