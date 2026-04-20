@@ -222,12 +222,13 @@ const agentPortalDropdown = computed(() => [
   {
     icon: "life-buoy",
     label: "Support",
-    onClick: () => window.open("https://t.me/frappedesk"),
+    onClick: () => window.open("mailto:support@svasamm.com"),
   },
   {
     icon: "book-open",
     label: "Docs",
-    onClick: () => window.open("https://docs.frappe.io/helpdesk"),
+    onClick: () =>
+      window.open("https://github.com/svasamm-research/helpdesk#readme"),
   },
   {
     label: "Log out",
