@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="No tickets yet">
+  <defs>
+    <linearGradient id="hnt-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+  </defs>
+  <!-- Background tint -->
+  <circle cx="200" cy="150" r="110" fill="#ffedd5" opacity="0.6"/>
+  <!-- Stylized ticket stub -->
+  <g fill="#ffffff" stroke="url(#hnt-g)" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M120 100 L280 100 Q288 100 288 108 L288 135 Q278 140 278 150 Q278 160 288 165 L288 192 Q288 200 280 200 L120 200 Q112 200 112 192 L112 165 Q122 160 122 150 Q122 140 112 135 L112 108 Q112 100 120 100 Z"/>
+  </g>
+  <!-- Perforated divider -->
+  <line x1="200" y1="108" x2="200" y2="192" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.7"/>
+  <!-- Content lines on left -->
+  <g fill="#ea580c" opacity="0.45">
+    <rect x="130" y="125" width="55" height="6" rx="3"/>
+    <rect x="130" y="140" width="45" height="5" rx="2.5"/>
+    <rect x="130" y="155" width="50" height="5" rx="2.5"/>
+    <rect x="130" y="170" width="35" height="5" rx="2.5"/>
+  </g>
+  <!-- "Number" placeholder on right stub -->
+  <g fill="#ea580c" opacity="0.55">
+    <rect x="220" y="135" width="50" height="8" rx="3"/>
+    <rect x="220" y="155" width="40" height="6" rx="3"/>
+  </g>
+</svg>
