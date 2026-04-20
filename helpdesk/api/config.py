@@ -7,9 +7,14 @@ import frappe
 # Changing these values here is the SINGLE source of truth for runtime
 # brand chrome; build-time chrome lives in desk/index.html +
 # desk/vite.config.js (VitePWA manifest).
+#
+# NOTE on paths: assets live in helpdesk/public/images/ — NOT under
+# helpdesk/public/desk/, which is gitignored (that directory is Vite's
+# build output, wiped on every `yarn build`). Keeping branded assets
+# outside the build outDir ensures they survive `git clone` and CI.
 _SVASAMM_BRAND_NAME = "Svasamm Helpdesk"
-_SVASAMM_BRAND_LOGO = "/assets/helpdesk/desk/svasamm/logo.svg"
-_SVASAMM_FAVICON = "/assets/helpdesk/desk/svasamm/favicon.svg"
+_SVASAMM_BRAND_LOGO = "/assets/helpdesk/images/svasamm_logo.svg"
+_SVASAMM_FAVICON = "/assets/helpdesk/images/svasamm_logo.svg"
 
 
 def _upstream_get_config():
