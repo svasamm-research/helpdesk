@@ -1,18 +1,40 @@
 <template>
   <svg
-    width="118"
-    height="118"
-    viewBox="0 0 118 118"
+    width="300"
+    height="300"
+    viewBox="0 0 300 300"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label="Svasamm Helpdesk"
   >
+    <!--
+      Svasamm Helpdesk app-icon mark. The original upstream 118x118 viewBox
+      was deliberately widened to 300x300 (matching the Svasamm CRM mark) so
+      downstream consumers - BrandLogo, UserMenu, the frappe-ui HelpModal
+      slot, manifest icons - render the new mark with generous bleed. Filename
+      (HDLogo.vue) preserved so no callers need updating.
+    -->
+    <defs>
+      <linearGradient id="hd-logo-grad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ea580c" />
+        <stop offset="100%" stop-color="#c2410c" />
+      </linearGradient>
+    </defs>
+    <rect width="300" height="300" rx="56" fill="url(#hd-logo-grad)" />
+    <!-- White speech bubble with tail (customer voice) -->
     <path
-      d="M93.9278 0H23.1013C10.3428 0 0 10.3428 0 23.1013V93.9278C0 106.686 10.3428 117.029 23.1013 117.029H93.9278C106.686 117.029 117.029 106.686 117.029 93.9278V23.1013C117.029 10.3428 106.686 0 93.9278 0Z"
-      fill="#7D42FB"
+      d="M60 75 Q60 55 80 55 L220 55 Q240 55 240 75 L240 185 Q240 205 220 205 L135 205 L95 245 L95 205 L80 205 Q60 205 60 185 Z"
+      fill="#ffffff"
     />
+    <!-- Orange checkmark inside bubble (issue resolved) -->
     <path
-      d="M95.9759 50.8753V27.8265L21 27.8265V38.3271H85.5278V48.3027C81.3275 49.5103 78.2824 53.3955 78.2824 57.9632C78.2824 62.531 81.3275 66.3637 85.5278 67.5713V77.5468H31.5006V50.1403H21V88.0474H96.0284V64.9986L89.7805 60.5359V55.3906L96.0284 50.9278L95.9759 50.8753Z"
-      fill="#EDF7FF"
+      d="M105 130 L140 165 L210 95"
+      fill="none"
+      stroke="#c2410c"
+      stroke-width="22"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     />
   </svg>
 </template>

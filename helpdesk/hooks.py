@@ -1,5 +1,5 @@
 app_name = "helpdesk"
-app_title = "Helpdesk"
+app_title = "Svasamm Helpdesk"
 app_publisher = "Frappe Technologies"
 app_description = "Customer Service Software"
 app_icon = "octicon octicon-file-directory"
@@ -9,11 +9,16 @@ app_license = "AGPLv3"
 required_apps = []  # svasamm: telephony dependency removed — see MAINTAINERS.md
 require_type_annotated_api_methods = True
 
+# Svasamm branding: logo points at a dedicated, non-gitignored asset path so
+# the Apps-menu popover inside CRM/DMS SPAs and the /app launchpad tile both
+# render the speech-bubble+check mark (not upstream's headset). The favicon
+# at /assets/helpdesk/desk/favicon.svg is maintained by desk/public/favicon.svg
+# (Vite publicDir) — overridden in our fork to the same icon.
 add_to_apps_screen = [
     {
         "name": "helpdesk",
-        "logo": "/assets/helpdesk/desk/favicon.svg",
-        "title": "Helpdesk",
+        "logo": "/assets/helpdesk/images/svasamm_logo.svg",
+        "title": "Svasamm Helpdesk",
         "route": "/helpdesk",
         "has_permission": "helpdesk.api.permission.has_app_permission",
     }

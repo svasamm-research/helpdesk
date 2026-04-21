@@ -146,14 +146,15 @@
     />
     <SettingsModal v-model="showSettingsModal" />
     <ShortcutsModal v-model="showShortcutsModal" />
+    <AboutModal v-model="showAboutModal" />
+    <!-- Svasamm shadow of frappe-ui HelpModal: no `articles` or `docsLink`
+         props (the upstream footer Help-centre link was removed). -->
     <HelpModal
       v-if="showHelpModal"
       v-model="showHelpModal"
-      v-model:articles="articles"
       appName="helpdesk"
-      title="Frappe Helpdesk"
+      title="Svasamm Helpdesk"
       :logo="logo"
-      docsLink="https://docs.frappe.io/helpdesk"
       :afterSkip="(step: string) => capture('onboarding_step_skipped_' + step)"
       :afterSkipAll="() => capture('onboarding_steps_skipped')"
       :afterReset="(step: string) => capture('onboarding_step_reset_' + step)"
@@ -173,6 +174,7 @@ import { Section, SidebarLink } from "@/components";
 import Apps from "@/components/Apps.vue";
 import CP from "@/components/command-palette/CP.vue";
 import { FrappeCloudIcon, InviteCustomer } from "@/components/icons";
+import AboutModal from "@/components/modals/AboutModal.vue";
 import ShortcutsModal from "@/components/modals/ShortcutsModal.vue";
 import SettingsModal from "@/components/Settings/SettingsModal.vue";
 import UserMenu from "@/components/UserMenu.vue";
@@ -194,13 +196,15 @@ import { isCustomerPortal } from "@/utils";
 import { call } from "frappe-ui";
 import {
   GettingStartedBanner,
-  HelpModal,
   IntermediateStepModal,
   minimize,
   showHelpModal,
   TrialBanner,
   useOnboarding,
 } from "frappe-ui/frappe";
+// Svasamm shadow: drops the upstream "Help centre" footer link. See
+// desk/src/svasamm/HelpModal.vue for the delta.
+import HelpModal from "@/svasamm/HelpModal.vue";
 
 import { HelpIcon } from "frappe-ui/icons";
 import { storeToRefs } from "pinia";
@@ -245,6 +249,7 @@ const telephonyStore = useTelephonyStore();
 const { isCallingEnabled } = storeToRefs(telephonyStore);
 
 const showShortcutsModal = ref(false);
+const showAboutModal = ref(false);
 const showCommandPalette = ref(false);
 
 const { pinnedViews, publicViews } = useView();
@@ -342,12 +347,13 @@ const agentPortalDropdown = computed(() => [
   {
     icon: "life-buoy",
     label: __("Support"),
-    onClick: () => window.open("https://t.me/frappedesk"),
+    onClick: () => window.open("mailto:support@svasamm.com"),
   },
   {
     icon: "book-open",
     label: __("Docs"),
-    onClick: () => window.open("https://docs.frappe.io/helpdesk"),
+    onClick: () =>
+      window.open("https://github.com/svasamm-research/helpdesk#readme"),
   },
   {
     label: __("Login to Frappe Cloud"),
@@ -364,6 +370,11 @@ const agentPortalDropdown = computed(() => [
     label: __("Settings"),
     icon: "settings",
     onClick: () => (showSettingsModal.value = true),
+  },
+  {
+    label: __("About Svasamm Helpdesk"),
+    icon: "info",
+    onClick: () => (showAboutModal.value = true),
   },
   {
     group: __("Danger"),
@@ -609,7 +620,7 @@ const articles = ref([
     ],
   },
   {
-    title: "Frappe Helpdesk Mobile",
+    title: "Svasamm Helpdesk Mobile",
     opened: false,
     subArticles: [
       { name: "pwa-installation", title: "Mobile App Installation" },

@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Svasamm Helpdesk">
   <defs>
-    <linearGradient id="hd-fav" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="hd-icon" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#ea580c"/>
       <stop offset="100%" stop-color="#c2410c"/>
     </linearGradient>
   </defs>
-  <!-- Rounded gradient tile for favicons / tab icon / launchpad tile -->
-  <rect width="64" height="64" rx="12" fill="url(#hd-fav)"/>
+  <!-- Rounded gradient tile (app-icon format for /app launchpad + Apps menu) -->
+  <rect width="64" height="64" rx="12" fill="url(#hd-icon)"/>
   <!-- White speech bubble with bottom-left tail, centered -->
   <path d="M12 14 Q12 10 16 10 L48 10 Q52 10 52 14 L52 38 Q52 42 48 42 L28 42 L20 50 L20 42 L16 42 Q12 42 12 38 Z" fill="#ffffff"/>
   <!-- Orange check inside the bubble -->

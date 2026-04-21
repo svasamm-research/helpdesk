@@ -68,7 +68,7 @@ app.use(FrappeUI);
 app.use(pinia);
 app.use(router);
 app.use(translationPlugin);
-app.use(telemetryPlugin, { app_name: "helpdesk" });
+app.use(telemetryPlugin, { app_name: "svasamm-helpdesk" });
 
 for (const c in globalComponents) {
   app.component(c, globalComponents[c]);

@@ -104,6 +104,9 @@
       </TransitionChild>
     </Dialog>
   </TransitionRoot>
+  <!-- Svasamm: About dialog lives outside the TransitionRoot so it stays
+       mounted even after the sidebar closes. -->
+  <AboutModal v-model="showAboutModal" />
 </template>
 
 <script setup lang="ts">
@@ -113,7 +116,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { computed, markRaw, onMounted } from "vue";
+import { computed, markRaw, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { Section } from "@/components";
@@ -129,6 +132,7 @@ import LucideLayoutDashboard from "~icons/lucide/layout-dashboard";
 
 import { useAuthStore } from "@/stores/auth";
 import { isCustomerPortal } from "@/utils";
+import AboutModal from "@/components/modals/AboutModal.vue";
 import Apps from "../Apps.vue";
 import {
   agentPortalSidebarOptions,
@@ -137,6 +141,8 @@ import {
 import { useTelephonyStore } from "@/stores/telephony";
 import { storeToRefs } from "pinia";
 const { pinnedViews, publicViews } = useView();
+
+const showAboutModal = ref(false);
 
 const notificationStore = useNotificationStore();
 const route = useRoute();
@@ -222,12 +228,18 @@ const agentPortalDropdown = computed(() => [
   {
     icon: "life-buoy",
     label: "Support",
-    onClick: () => window.open("https://t.me/frappedesk"),
+    onClick: () => window.open("mailto:support@svasamm.com"),
   },
   {
     icon: "book-open",
     label: "Docs",
-    onClick: () => window.open("https://docs.frappe.io/helpdesk"),
+    onClick: () =>
+      window.open("https://github.com/svasamm-research/helpdesk#readme"),
+  },
+  {
+    icon: "info",
+    label: "About Svasamm Helpdesk",
+    onClick: () => (showAboutModal.value = true),
   },
   {
     label: "Log out",

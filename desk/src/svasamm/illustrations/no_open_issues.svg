@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="No open issues">
+  <defs>
+    <linearGradient id="noi-hd" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#c2410c"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="150" r="110" fill="#ffedd5" opacity="0.6"/>
+  <!-- Large celebratory checkmark in a rounded square -->
+  <g fill="#ffffff" stroke="url(#noi-hd)" stroke-width="3" stroke-linejoin="round">
+    <rect x="145" y="95" width="110" height="110" rx="20"/>
+  </g>
+  <g fill="none" stroke="url(#noi-hd)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M170 150 L192 172 L234 128"/>
+  </g>
+  <!-- Decorative rays around the box -->
+  <g stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" opacity="0.5">
+    <line x1="95" y1="150" x2="115" y2="150"/>
+    <line x1="285" y1="150" x2="305" y2="150"/>
+    <line x1="200" y1="60" x2="200" y2="80"/>
+    <line x1="200" y1="220" x2="200" y2="240"/>
+    <line x1="120" y1="85" x2="133" y2="98"/>
+    <line x1="267" y1="202" x2="280" y2="215"/>
+    <line x1="280" y1="85" x2="267" y2="98"/>
+    <line x1="133" y1="202" x2="120" y2="215"/>
+  </g>
+</svg>

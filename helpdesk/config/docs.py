@@ -8,4 +8,6 @@ Configuration for docs
 
 
 def get_context(context):
-    context.brand_html = "Frappe Helpdesk"
+    # Svasamm fork rebrand: brand_html is shown on the generated docs site
+    # for this app. Mirror the SPA branding.
+    context.brand_html = "Svasamm Helpdesk"

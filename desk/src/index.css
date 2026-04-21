@@ -1,4 +1,5 @@
 @import "frappe-ui/style.css";
+@import "./svasamm/tokens.css"; /* Svasamm Helpdesk brand tokens — later import wins, overrides frappe-ui primary scale */
 
 @tailwind base;
 @tailwind components;
