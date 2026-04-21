@@ -45,14 +45,15 @@ def _upstream_get_config():
     return res
 
 
+# allow_guest justification — this endpoint must remain accessible to
+# unauthenticated users because it returns brand chrome (brand_name,
+# brand_logo, favicon) that the /helpdesk SPA needs to render BEFORE the
+# login page; without allow_guest the login page itself would fail to
+# load the Svasamm brand. Mirrors upstream frappe/helpdesk v1.22.1's
+# get_config, which carries allow_guest=True for the same reason. The
+# response body is intentionally non-sensitive: no PII, no session data,
+# no internal IDs.
 # nosemgrep: frappe-semgrep-rules.rules.security.guest-whitelisted-method
-# Justification: this endpoint must remain accessible to unauthenticated
-# users because it returns brand chrome (brand_name, brand_logo, favicon)
-# that the /helpdesk SPA needs to render BEFORE the login page — without
-# allow_guest the login page itself would fail to load the Svasamm brand.
-# This mirrors upstream frappe/helpdesk v1.22.1's get_config, which also
-# carries allow_guest=True for the same reason. The response body is
-# intentionally non-sensitive: no PII, no session data, no internal IDs.
 @frappe.whitelist(allow_guest=True)
 def get_config():
     """Return SPA config, with Svasamm brand override applied.

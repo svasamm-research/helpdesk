@@ -24,15 +24,25 @@ async function openAboutModal(page) {
 }
 
 test.describe('Svasamm Helpdesk SPA branding', () => {
-  test.beforeEach(async ({ page }) => {
-    // Unauthenticated /helpdesk hits Desk login. Authenticate there,
-    // then subsequent page.goto calls in each test land on /helpdesk.
-    await page.goto('/login')
-    await page.fill('input[name="usr"]', TEST_USER)
-    await page.fill('input[name="pwd"]', TEST_PWD)
-    await page.click('button[type="submit"]')
-    // Wait for Desk or Helpdesk to load — either is fine post-login.
-    await page.waitForURL(/\/app|\/helpdesk/, { timeout: 10_000 })
+  test.beforeEach(async ({ page, baseURL }) => {
+    // Authenticate via Frappe's REST login endpoint, then inject the
+    // session cookies into the browser context. This avoids driving the
+    // HTML login form: Frappe v16's login page uses Vue components whose
+    // input[name] attributes and mount timing differ from earlier
+    // versions, causing page.fill('input[name="usr"]', ...) to time out
+    // waiting for an element that never matches. The REST API accepts
+    // usr/pwd regardless of the form's current DOM shape.
+    const loginResponse = await page.request.post(`${baseURL}/api/method/login`, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      form: { usr: TEST_USER, pwd: TEST_PWD },
+    })
+    if (!loginResponse.ok()) {
+      throw new Error(
+        `Login to ${baseURL} as ${TEST_USER} failed: ${loginResponse.status()} ${await loginResponse.text()}`
+      )
+    }
+    const { cookies } = await page.request.storageState()
+    await page.context().addCookies(cookies)
   })
 
   test('document title is Svasamm Helpdesk', async ({ page }) => {
